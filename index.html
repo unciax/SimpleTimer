@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Timer</title>
+		<meta charset="utf-8" />
+		<link rel=stylesheet type="text/css" href="style.css">
+		<script type="text/javascript">
+			var hour,min,sec;
+			var element,ctl,timerid,flag;
+			function init(){
+				element = document.getElementById("lbltime");
+				ctl = document.getElementById("ctl");
+				hour=0; min=0; sec=0; flag=false;
+				showNowCountTime();
+				ctl.innerHTML="start";
+			}
+			function showNowCountTime(){
+				str=''
+				if (hour<10) { str = '0' + hour.toString();}
+				else {str = hour.toString();}
+				str = str + ':';
+				if (min<10) { str = str + '0' + min.toString();}
+				else {str = str + min.toString();}
+				str = str + ':';
+				if (sec<10) { str = str + '0' + sec.toString();}
+				else {str = str + sec.toString();}
+				element.innerHTML = str;
+			}
+			function resetval(){
+				clearInterval(timerid);
+				init();
+			}
+			function countfunc(){
+				sec++;
+				if(sec>=60){min++; sec=0;}
+				if(min>=60){hour++; min=0;}
+				showNowCountTime();
+			}
+			function countSwitch(){
+				if(flag){
+					ctl.innerHTML="start";
+					clearInterval(timerid);
+					flag=false;
+				}else{
+					ctl.innerHTML="pause";
+					timerid=window.setInterval(countfunc,1000);
+					flag=true;
+				}
+			}
+		</script>
+	</head>
+	<body onload="init();">
+		<div id="clock">
+			<h1 id="lbltime"></h1>
+			<a id="ctl" href="#" onclick="countSwitch()">Start</a>&nbsp;&nbsp;&nbsp;
+			<a href="#" onclick="resetval()">Reset</a>
+		</div>
+	</body>
+</html>
+<!--
+	ProgName : Timer
+	Author   : UnciaX
+	Shared on Github, please visit https://github.com/unciax/SimpleTimer.
+-->
